@@ -1,20 +1,50 @@
-export interface FetchOptions {
-    timeout: number,
-    body: FormData,
-    method: string,
+import { UnknownAction } from "@reduxjs/toolkit";
+import { ReactNode } from "react";
+
+export interface FCWithChildren {
+    children?: ReactNode
 }
 
-export interface SubObj {
-    name: string,
-    id: React.Key,
+export interface ListObject {
+    level?: number;
+    child?: ListObject[];
+    parent_object_id?: number;
+    id?: number,       
+    name?: string,   
+    position_name?: string,  
+    org_name?: string,  
+    position_parent_id?: string | React.Key,
 }
 
-export interface CollObj {
-    id: React.Key,
-    fullname: string,
-    position_parent_name: string,
+export interface RespData {
+    count: number | string,
+    data: ListObject[]
 }
 
-export interface SubObjCard extends SubObj {
-    key: React.Key,
+export interface CardProps extends ListObject {
+    key?: React.Key,
+    title?: string,
+    children?: ReactNode,
+    position_name?: string,
+}
+
+export interface SearchInput {
+    searchPlaceholder: string,
+    setSearchValue: (searchValue: string) => UnknownAction
+}
+
+export interface CollChange {
+    change_log: {
+        date: {_text: string},
+        org_name: {_text: string},
+        position_name: {_text: string},
+        position_parent_name: {_text: string},
+    }
+}
+
+export interface CollState {
+    history_state: {
+        start_date: {_text: string},
+        finish_date: {_text: string},
+    }
 }
