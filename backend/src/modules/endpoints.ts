@@ -5,18 +5,17 @@ function getSubColls(subdivision: string) {
 	const data = selectAll(`SELECT id, fullname AS name, position_parent_name, position_name 
 		FROM dbo.collaborators 
 		WHERE position_parent_name = '${subdivision}'`)
-	const count = selectAll<{count: number}>(`SELECT count(*) as count 
+	const count = selectOne<{count: number}>(`SELECT count(*) as count 
 		FROM dbo.collaborators 
 		WHERE position_parent_name = '${subdivision}'`)
 	return {
-		count: `${count[0].count}`,
+		count: `${count.count}`,
 		data: data
 	}
 }
 
 function getColls(page: string, limit: string) {
-	alert(curUserID)
-	const offset = (Int(page) - 1) * 15
+	const offset = (Int(page) - 1) * Int(limit)
 	const data = selectAll(`SELECT colls.id, colls.fullname AS name, colls.position_name, colls.org_name, 
 		subs.person_id as subscription, colls.position_parent_id
 		FROM dbo.collaborators colls
@@ -25,11 +24,11 @@ function getColls(page: string, limit: string) {
 		ORDER BY name
 		LIMIT ${limit}
 		OFFSET ${offset}`)
-	const count = selectAll<{count: number}>(`SELECT count(*) as count FROM dbo.collaborators colls
+	const count = selectOne<{count: number}>(`SELECT count(*) as count FROM dbo.collaborators colls
 		LEFT JOIN dbo.subscriptions subs ON colls.id = subs.person_id
 		WHERE (subs.person_id <> ${curUserID} AND colls.id <> ${curUserID}) OR subs.document_id IS NULL`)
 	return {
-		count: `${count[0].count}`,
+		count: `${count.count}`,
 		data: data
 	}
 }
@@ -41,11 +40,11 @@ function getComand() {
 		LEFT JOIN dbo.subscriptions subs ON colls.id = subs.document_id
 		WHERE subs.person_id = ${curUserID}
 		ORDER BY name`)
-	const count = selectAll<{count: number}>(`SELECT count(*) as count FROM dbo.collaborators colls
+	const count = selectOne<{count: number}>(`SELECT count(*) as count FROM dbo.collaborators colls
 		LEFT JOIN dbo.subscriptions subs ON colls.id = subs.person_id
 		WHERE subs.document_id = ${curUserID}`)
 	return {
-		count: `${count[0].count}`,
+		count: `${count.count}`,
 		data: data		
 	}
 }
@@ -63,17 +62,17 @@ function addToComand(person_id: string) {
 }
 
 function deleteFromComand(id: string) {
-	const document = selectAll<{id: number}>(`SELECT id FROM dbo.subscriptions 
+	const document = selectOne<{id: number}>(`SELECT id FROM dbo.subscriptions 
 		WHERE document_id = ${id} AND person_id = ${curUserID}`)
-	if (document.length) {
-		const documentId = document[0].id
+	if (document !== undefined) {
+		const documentId = document.id
 		const docUrl = UrlFromDocID(documentId)
 		DeleteDoc(docUrl, true)
 		return {
 			result: true
 		}
-	} else {
-		return `${document.length}`
+	} else return {
+		result: false
 	}
 }
 
@@ -88,9 +87,9 @@ function getSubs() {
 		JOIN sub_hierarchy AS shr ON sub.parent_object_id = shr.id)
 		SELECT * from sub_hierarchy AS shr
 		ORDER BY shr.level DESC`)
-	const count = selectAll<{count: number}>("SELECT count(*) as count FROM dbo.subdivisions")
+	const count = selectOne<{count: number}>("SELECT count(*) as count FROM dbo.subdivisions")
 	return {
-		count: `${count[0].count}`,
+		count: `${count.count}`,
 		data: data		
 	}
 }

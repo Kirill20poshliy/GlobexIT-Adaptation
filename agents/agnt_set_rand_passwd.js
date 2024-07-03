@@ -1,5 +1,5 @@
 var IS_DEBUG = tools_web.is_true(Param.IS_DEBUG)
-var COLLS = tools_web.parse_multiple_parameter(Param.COLLS)
+var COLLS = OBJECTS_ID_STR.split(";")
 
 
 function setNewRandPasswd(colls) {
