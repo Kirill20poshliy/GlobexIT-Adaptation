@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
-import { CardProps, CollChange, CollState } from '../config/types'
-import CollaboratorInfo from './CollaboratorInfo'
-import { useLazyGetCollInfoQuery } from '../store/api'
+import { CardProps, CollChange, CollState } from '../../shared/models'
+import CollaboratorInfo from '../CollaboratorInfo/CollaboratorInfo'
+import { useLazyGetCollInfoQuery } from '../../store/api'
 import { message, Spin } from 'antd'
 
 

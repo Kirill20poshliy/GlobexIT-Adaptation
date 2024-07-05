@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BACKEND_URL } from "../config/global";
-import { RespData } from "../config/types";
+import { RespData } from "../shared/models";
 import convert from 'xml-js'
 
 

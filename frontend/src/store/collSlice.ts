@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ListObject, RespData } from '../config/types'
+import { ListObject, RespData } from '../shared/models'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 

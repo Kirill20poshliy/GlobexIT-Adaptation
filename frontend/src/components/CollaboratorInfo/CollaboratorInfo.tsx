@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { CollChange, CollState } from '../config/types'
+import { CollChange, CollState } from '../../shared/models'
 import dayjs from 'dayjs'
 
 

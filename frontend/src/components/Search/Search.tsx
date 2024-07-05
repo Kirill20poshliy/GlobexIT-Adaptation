@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { SearchInput } from '../config/types'
+import { SearchInput } from '../../shared/models'
 import { Input } from 'antd';
 import { useDispatch } from 'react-redux';
 

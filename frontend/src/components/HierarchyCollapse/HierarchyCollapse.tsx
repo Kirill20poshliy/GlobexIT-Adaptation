@@ -1,8 +1,8 @@
 import { FC } from 'react'
 import { Collapse, Empty, Flex } from 'antd';
-import useFilter from '../hooks/useFilter';
-import { ListObject } from '../config/types';
-import SubCollsList from './SubCollsList';
+import useFilter from '../../hooks/useFilter';
+import { ListObject } from '../../shared/models';
+import SubCollsList from '../SubCollsList/SubCollsList';
 
 
 const HierarchyList: FC<{data: ListObject[], searchValue: string}> = ({data, searchValue}) => {

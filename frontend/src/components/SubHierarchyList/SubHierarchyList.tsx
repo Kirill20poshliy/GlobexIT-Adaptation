@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react'
 import { Flex, message, Spin } from 'antd';
-import Search from './Search';
+import Search from '../Search/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSubList, setSearchValue } from '../store/subSlice';
-import { RootState } from '../store';
-import { useLazyGetSubsQuery } from '../store/api';
-import HierarchyCollapse from './HierarchyCollapse';
+import { setSubList, setSearchValue } from '../../store/subSlice';
+import { RootState } from '../../store';
+import { useLazyGetSubsQuery } from '../../store/api';
+import HierarchyCollapse from '../HierarchyCollapse/HierarchyCollapse';
 
 
 const SubHierarchyList: FC = () => {

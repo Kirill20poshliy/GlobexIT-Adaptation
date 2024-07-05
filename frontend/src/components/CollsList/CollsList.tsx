@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
-import Search from './Search'
+import { RootState } from '../../store'
+import Search from '../Search/Search'
 import { Button, Empty, Flex, message, Spin, Tooltip, Tree, TreeProps } from 'antd'
-import { deleteCollFromCollList, setCollList, setSearchValue } from '../store/collSlice'
-import { useAddToComandMutation, useLazyGetCollsQuery } from '../store/api'
-import Card from './Card'
+import { deleteCollFromCollList, setCollList, setSearchValue } from '../../store/collSlice'
+import { useAddToComandMutation, useLazyGetCollsQuery } from '../../store/api'
+import Card from '../Card/Card'
 import { FiPlus } from 'react-icons/fi'
-import useFilter from '../hooks/useFilter'
-import { ListObject } from '../config/types'
-import { addCollToComandList } from '../store/comandSlice'
+import useFilter from '../../hooks/useFilter'
+import { ListObject } from '../../shared/models'
+import { addCollToComandList } from '../../store/comandSlice'
 
 
 const CollsList: FC = () => {

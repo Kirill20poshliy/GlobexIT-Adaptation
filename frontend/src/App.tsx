@@ -1,8 +1,8 @@
 import { Tabs } from "antd";
 import { FC } from "react"
-import SubHierarchyList from "./components/SubHierarchyList";
-import CollsList from "./components/CollsList";
-import ComandList from "./components/ComandList";
+import SubHierarchyList from "./components/SubHierarchyList/SubHierarchyList";
+import CollsList from "./components/CollsList/CollsList";
+import ComandList from "./components/ComandList/ComandList";
 
 
 const App:FC = () => {

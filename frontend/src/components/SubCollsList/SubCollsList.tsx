@@ -1,7 +1,7 @@
 import { Flex, message, Spin } from 'antd'
 import { FC, useEffect, useState } from 'react'
-import { useLazyGetSubCollsQuery } from '../store/api'
-import { ListObject } from '../config/types'
+import { useLazyGetSubCollsQuery } from '../../store/api'
+import { ListObject } from '../../shared/models'
 
 
 const List: FC<{subName: string}> = ({subName}) => {
