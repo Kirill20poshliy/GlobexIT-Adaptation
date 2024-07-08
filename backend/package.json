@@ -37,5 +37,8 @@
     "ts-node": "^10.9.1",
     "typescript": "~4.4.4",
     "urllib": "^3.13.1"
+  },
+  "dependencies": {
+    "xml-js": "^1.6.11"
   }
 }
