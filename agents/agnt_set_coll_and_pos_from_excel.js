@@ -46,8 +46,8 @@ function createCards(collsData) {
                 docColl = tools.new_doc_by_name('collaborator')
                 docColl.BindToDb()
 
-                docColl.TopElem.fullname = collsData[row][0] + " " + collsData[row][1] + " " + collsData[row][2]
-                docColl.TopElem.login = collsData[row][3] 
+                docColl.TopElem.fullname = fullname
+                docColl.TopElem.login = collsData[row][3]
                 docColl.TopElem.sex = collsData[row][4]
                 coll = docColl.TopElem
                 docColl.Save()
@@ -59,7 +59,7 @@ function createCards(collsData) {
                 docPos.TopElem.org_id = organization.id
                 docPos.TopElem.basic_collaborator_id = coll.id
                 docPos.Save()
-                
+
             } else {
                 docPos = tools.new_doc_by_name('position')
                 docPos.BindToDb()
