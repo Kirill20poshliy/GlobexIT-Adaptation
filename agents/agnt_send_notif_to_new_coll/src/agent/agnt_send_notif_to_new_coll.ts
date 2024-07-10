@@ -1,22 +1,22 @@
 var IS_DEBUG = tools_web.is_true(Param.IS_DEBUG)
-var BOSS_TYPE = Param.BOSS_TYPE
-var NOTIFICATION = Param.NOTIFICATION
+var BOSS_TYPE = Param.GetOptProperty('BOSS_TYPE')
+var NOTIFICATION: string = Param.GetOptProperty('NOTIFICATION')
 
-interface Coll {id: number, fullname?: string}
+interface Coll {id: number, fullname?: string, boss_id: number}
 
 function selectColls(): Coll[] {
     try {
         var dateNow = DateNewTime(Date(), 0, 0, 0)
         var dateYesterday = DateOffset(dateNow, -86400)
-        return ArraySelectAll<Coll>(XQuery("sql: SELECT colls.id, colls.fullname, boss \
+        return ArraySelectAll<Coll>(XQuery("sql: SELECT colls.id, colls.fullname, boss_id \
             FROM dbo.collaborators colls \
             JOIN dbo.collaborator AS coll_data ON colls.id = coll_data.id \
             CROSS JOIN LATERAL \
             unnest(\
                 xpath(\
-                    '//collaborator/func_managers/func_manager[boss_type_id="+ BOSS_TYPE +"]/person_id/text()'::text, \
-                    coll_data.data)\
-                ) AS boss \
+                    '//collaborator/func_managers/func_manager[boss_type_id="+ BOSS_TYPE +"]/person_id/text()', \
+                    coll_data.data)::text[]\
+                ) AS boss_id \
             WHERE hire_date IN ('" + dateNow + "', '" + dateYesterday + "')"))
     } catch (e) {
         throw Error("selectColls -> " + e?.message)
@@ -26,24 +26,24 @@ function selectColls(): Coll[] {
 
 function sendEmail(coll: Coll) {
     try {
-        var notificationDoc = tools.open_doc(OptInt(NOTIFICATION))
+        var notificationDoc = tools.open_doc(Int(NOTIFICATION))
         if (notificationDoc == undefined) 
             throw new Error('Тип уведомления с ID: ' + NOTIFICATION + ' не найден!')
 
-        var collDoc = tools.open_doc(OptInt(coll.id))
+        var collDoc = tools.open_doc(Int(coll.id))
         if (collDoc == undefined) 
             throw new Error('Сотрудник с ID: ' + coll.id + 'не найден!')
 
-        var bossDoc = tools.open_doc(OptInt(coll))
+        var bossDoc = tools.open_doc(Int(coll.boss_id))
         if (bossDoc == undefined) 
-            throw new Error('Руководитель с ID: ' + coll + 'не найден!')
+            throw new Error('Руководитель с ID: ' + coll.boss_id + 'не найден!')
 
         tools.create_notification(
-            OptInt(NOTIFICATION), 
-            OptInt(coll.id), 
+            Int(NOTIFICATION), 
+            Int(coll.id), 
             null, 
-            OptInt(coll), 
-            collDoc.TopElem, 
+            Int(coll.boss_id), 
+            collDoc.TopElem,
             bossDoc.TopElem
         )
 
