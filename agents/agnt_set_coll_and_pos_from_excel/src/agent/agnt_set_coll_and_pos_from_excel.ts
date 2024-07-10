@@ -6,23 +6,32 @@ function selectDoc() {
     try {
         var cFileUrl = Screen.AskFileOpen()
         var doc = OpenDoc(cFileUrl, 'format=excel')
-        var ws = ArrayFirstElem(doc.TopElem)
+        var ws = doc.TopElem.OptChild<[]>('worksheet')
         return ws
     } catch (e) {
         doc = OpenDoc('file:///' + sFileUrl, 'format=excel')
-        ws = ArrayFirstElem(doc.TopElem)
+        ws = doc.TopElem.OptChild<[]>('worksheet')
         return ws
     }
 }
 
 
-function getID(table, column, value) {
-    return ArrayOptFirstElem(XQuery("sql: SELECT id FROM dbo." + table + " WHERE " + column + " = '" + value + "'"), {id: ''})
+function getID(table: string, column: string, value: string) {
+    return ArrayOptFirstElem<{id: number}, {id: undefined}>(XQuery("sql: SELECT id FROM dbo." + table 
+        + " WHERE " + column + " = '" + value + "'"), {id: undefined})
 }
 
 
-function createCards(collsData) {
+function createCards(collsData: []) {
     try {
+        var row: number
+        var fullname: string
+        var coll: {id: number | any}
+        var pos: {id: number}
+        var subdivision: {id: number}
+        var organization: {id: number}
+        var docColl: XmlDocument
+        var docPos: XmlDocument
         for (row = 1; row < ArrayCount(collsData); row++) {
             fullname = collsData[row][0] + ' ' + collsData[row][1] + ' ' + collsData[row][2]
             coll = getID('collaborators', 'fullname', fullname)
@@ -38,26 +47,26 @@ function createCards(collsData) {
 
             if (coll.id) {
                 docColl = tools.open_doc(coll.id)
-                docColl.TopElem.login = collsData[row][3]
-                docColl.TopElem.sex = collsData[row][4]
+                docColl.TopElem.Child('login').Value = collsData[row][3]
+                docColl.TopElem.Child('sex').Value = collsData[row][4]
                 docColl.Save()
 
             } else {
                 docColl = tools.new_doc_by_name('collaborator')
                 docColl.BindToDb()
 
-                docColl.TopElem.fullname = fullname
-                docColl.TopElem.login = collsData[row][3]
-                docColl.TopElem.sex = collsData[row][4]
-                coll = docColl.TopElem
+                docColl.TopElem.Child('fullname').Value = fullname
+                docColl.TopElem.Child('login').Value = collsData[row][3]
+                docColl.TopElem.Child('sex').Value = collsData[row][4]
+                coll = {id: docColl.TopElem.Child('id').Value}
                 docColl.Save()
             }
 
             if (pos.id) {
                 docPos = tools.open_doc(pos.id)
-                docPos.TopElem.parent_object_id = subdivision.id
-                docPos.TopElem.org_id = organization.id
-                docPos.TopElem.basic_collaborator_id = coll.id
+                docPos.TopElem.Child('parent_object_id').Value = subdivision.id
+                docPos.TopElem.Child('org_id').Value = organization.id
+                docPos.TopElem.Child('basic_collaborator_id').Value = coll.id
                 docPos.Save()
 
             } else {
@@ -65,9 +74,9 @@ function createCards(collsData) {
                 docPos.BindToDb()
                 
                 docPos.TopElem.name = collsData[row][5]
-                docPos.TopElem.parent_object_id = subdivision.id
-                docPos.TopElem.org_id = organization.id
-                docPos.TopElem.basic_collaborator_id = coll.id
+                docPos.TopElem.Child('parent_object_id').Value = subdivision.id
+                docPos.TopElem.Child('org_id').Value = organization.id
+                docPos.TopElem.Child('basic_collaborator_id').Value = coll.id
                 docPos.Save()
             }
         }
@@ -87,7 +96,7 @@ function Main() {
 }
 
 
-function Log(value1, value2) {
+function Log(value1: string, value2?: string) {
     var text = value2 != undefined ? value1 + ": " + value2 : value1
     if(IS_DEBUG)
         alert(text)
