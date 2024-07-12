@@ -94,3 +94,4 @@ function UrlOrFilePathToFilePath(cFileUrl: string): string {
     throw new Error("Function not implemented.")
 }
 
+export {}
