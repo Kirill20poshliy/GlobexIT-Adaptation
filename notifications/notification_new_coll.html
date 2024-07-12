@@ -1,0 +1,51 @@
+<%
+        NamePdf = 'Pamyatka_new_coll.pdf';
+
+        if (LdsIsServer) {
+            attachmentChild = docActiveNotification.TopElem.attachments.AddChild()
+            attachmentChild.data.LoadFromFile('x-local://wt/web/project/'+ NamePdf)
+            attachmentChild.name = NamePdf;
+        } else {
+            attachmentChild = docActiveNotification.TopElem.attachments.AddChild()
+            pdf = LoadUrlData(UrlAppendPath(global_settings.settings.portal_base_url, '/project/'+ NamePdf))
+            attachmentChild.data = pdf
+            attachmentChild.name = NamePdf
+        }
+%>
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: .5rem;
+    }
+    p {
+        line-height: 1.5rem;
+    }
+    #image {
+        background-image: url('https://umnazia.ru/wp-content/uploads/2021/10/oficialnoe-privetstvie-na-anglijskom.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 16rem;
+    }
+    #content {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        padding: .5rem;
+    }
+</style>
+<body>
+    <div id="image"></div>
+    <div id="content">
+        <h3>Уважаемый(ая), <%=objDoc.fullname%></h3>
+        <p>Поздравляем со вступлением в должность, твой руководитель - <%=objDocSec.fullname%> расскажет тебе что к чему.<br>Ссылка на анкету (только для сотрудников Головного офиса) - <a href="/">тут</a>.</p>
+    </div>
+</body>
