@@ -1,12 +1,15 @@
 .vscode
-agents/agnt_set_rand_passwd/node_modules
-agents/agnt_set_rand_passwd/build
+# agents/agnt_set_rand_passwd/node_modules
+# agents/agnt_set_rand_passwd/build
 
-agents/agnt_set_section_card_from_json/node_modules
-agents/agnt_set_section_card_from_json/build
+# agents/agnt_set_section_card_from_json/node_modules
+# agents/agnt_set_section_card_from_json/build
 
-agents/agnt_set_coll_and_pos_from_excel/node_modules
-agents/agnt_set_coll_and_pos_from_excel/build
+# agents/agnt_set_coll_and_pos_from_excel/node_modules
+# agents/agnt_set_coll_and_pos_from_excel/build
 
-agents/agnt_send_notif_to_new_coll/node_modules
-agents/agnt_send_notif_to_new_coll/build
+# agents/agnt_send_notif_to_new_coll/node_modules
+# agents/agnt_send_notif_to_new_coll/build
+build/
+dist/
+node_modules/
