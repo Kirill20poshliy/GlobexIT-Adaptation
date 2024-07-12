@@ -18,8 +18,7 @@ function getMessage(): string {
 
 function sendMessage(text: string): boolean {
     try {
-        var dCurUser = OpenDoc(UrlFromDocID(Int(curUserID)))
-        var userBosses = dCurUser.TopElem.Child('func_managers')
+        var userBosses = curUser.Child('func_managers')
         if (userBosses !== undefined && IsArray(userBosses)) {
             var boss = ArrayOptFind<unknown>(userBosses, 'This.boss_type_id==' + BOSS_TYPE) 
             var bossId: string = boss.GetOptProperty('person_id')
