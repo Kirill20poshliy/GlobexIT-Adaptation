@@ -1,7 +1,7 @@
-declare var RESULT: {}
-declare var BOSS_TYPE: number
-declare var command: string
-declare var form_fields: string
+declare let RESULT: {}
+declare let BOSS_TYPE: number
+declare let command: string
+declare let form_fields: string
 
 
 interface Field {
@@ -12,7 +12,7 @@ interface Field {
 
 function getMessage(): string {
     var flds: Field[] = ParseJson(form_fields)
-    return ArrayFirstElem(flds).GetOptProperty('value')
+    return ArrayOptFirstElem<Field>(flds).GetOptProperty('value')
 }
 
 
