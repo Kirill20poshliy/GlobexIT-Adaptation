@@ -3,7 +3,7 @@ declare let Env: Env
 declare let SORT: {FIELD: string, DIRECTION: string}
 
 
-interface Adaptation {
+interface iAdaptation {
 	id: number,
 	person_fullname: string,
 	position_name: string,
@@ -19,8 +19,16 @@ interface Adaptation {
 RESULT = []
 
 
-let arrAdaptations = ArraySelectAll<Adaptation>(XQuery("sql: SELECT id, person_fullname, position_name, \
-    start_date, plan_readiness_date, finish_date, readiness_percent, status, position_type \
+let arrAdaptations = ArraySelectAll<iAdaptation>(XQuery("sql: SELECT \
+		id, \
+		person_fullname, \
+		position_name, \
+		start_date, \
+		plan_readiness_date, \
+		finish_date, \
+		readiness_percent, \
+		status, \
+		position_type \
     FROM dbo.career_reserves \
     WHERE readiness_percent = 100"))
 
