@@ -1,15 +1,4 @@
-﻿declare let columns: XmlElem<Column>
-
-
-interface Column {
-    flag_formula: boolean,
-    column_title: string,
-    column_value: string,
-    datatype: string
-}
-
-
-interface Result {
+﻿interface iResult {
     id?: number,
     code: string,
     fullname: string,
@@ -23,7 +12,7 @@ interface Result {
 }
 
 
-let arrResult = ArraySelectAll<Result>(XQuery("sql: SELECT \
+let arrResult = ArraySelectAll<iResult>(XQuery("sql: SELECT \
         gr.id, \
         gr.code, \
         gr.collaborator_fullname AS fullname, \
@@ -36,27 +25,8 @@ let arrResult = ArraySelectAll<Result>(XQuery("sql: SELECT \
     FROM dbo.group_collaborators gr \
     LEFT JOIN dbo.collaborators c1 ON c1.id = gr.collaborator_id \
     LEFT JOIN dbo.collaborators c2 ON c2.id = gr.tutor_id \
+    WHERE gr.name = 'Сотрудники - руководители' \
     ORDER BY fullname"))
-
-
-function setColumn(title: string, value: string): void {
-    let column = columns.AddChild()
-    column.flag_formula = true
-    column.column_title = title
-    column.column_value = 'ListElem.' + value
-    column.datatype = 'string'
-}
-
-columns.Clear()
-
-setColumn('Код', 'code')
-setColumn('ФИО', 'fullname')
-setColumn('Email', 'email')
-setColumn('Должность', 'position')
-setColumn('Подразделение', 'subdivision')
-setColumn('ФИО руководителя', 'tutor_fullname')
-setColumn('Email руководителя', 'tutor_email')
-setColumn('Должность руководителя', 'tutor_position')
 
 // @ts-ignore
 return arrResult
