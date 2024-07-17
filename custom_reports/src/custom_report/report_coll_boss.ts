@@ -1,6 +1,5 @@
 ﻿declare let _CRITERIONS: {value: string}[]
-
-let grName = ArrayOptFind(_CRITERIONS, 'This.column_title == "name"').value
+let grID = ArrayOptFind(_CRITERIONS, 'This.column_title == "name"').value
 
 interface iResult {
     id?: number,
@@ -29,7 +28,7 @@ let arrResult = ArraySelectAll<iResult>(XQuery("sql: SELECT \
     FROM dbo.group_collaborators gr \
     LEFT JOIN dbo.collaborators c1 ON c1.id = gr.collaborator_id \
     LEFT JOIN dbo.collaborators c2 ON c2.id = gr.tutor_id \
-    WHERE gr.name = '" + grName + "' \
+    WHERE gr.group_id = '" + grID + "' \
     ORDER BY fullname"))
 
 // @ts-ignore
