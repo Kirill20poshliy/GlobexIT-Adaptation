@@ -2,7 +2,12 @@ declare let continueFlag: boolean
 
 // Этап 1. Выгрузка новых пользователей. Регулярно выполняемый код:
 //
-let arrColls = ArrayOptFirstElem(XQuery("sql: SELECT id FROM dbo.collaborators WHERE code = '" + Trim('{[1]}') + "'"))
+let arrColls = ArrayOptFirstElem(XQuery("sql: \
+    SELECT id \
+    FROM dbo.collaborators \
+    WHERE code = '" + Trim('{[1]}') + "'"
+))
+
 if (arrColls != undefined || Trim('{[1]}') == "") {
     continueFlag = true
 }
@@ -17,9 +22,11 @@ if (Trim('{[1]}') == "") {
 
 // Этап 3. Выгрузка новых должностей. Регулярно выполняемый код:
 //
-let arrPoss = ArrayOptFirstElem(XQuery("sql: SELECT id \
+let arrPoss = ArrayOptFirstElem(XQuery("sql: \
+    SELECT id \
     FROM dbo.positions \
-    WHERE code = '"+ Trim('{[5]}') + "_" + Trim('{[1]}') + "'"))
+    WHERE code = '"+ Trim('{[5]}') + "_" + Trim('{[1]}') + "'"
+))
 
 if (arrPoss !== undefined || Trim('{[5]}') == "") {
     continueFlag = true
