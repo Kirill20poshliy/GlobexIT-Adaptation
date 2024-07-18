@@ -10,8 +10,13 @@ let learningPersonId = learningDoc.Child('person_id').Value
 let learningStateId = learningDoc.Child('state_id').Value
 
 
-let arrLearnings = ArraySelectAll(XQuery("sql: SELECT id FROM dbo.learnings \
-    WHERE course_id = '" + learningCourseId + "' AND person_id = '" + learningPersonId + "' AND state_id <> 4"))
+let arrLearnings = ArraySelectAll(XQuery("sql: \
+    SELECT id \
+    FROM dbo.learnings \
+    WHERE course_id = '" + learningCourseId + 
+    "' AND person_id = '" + learningPersonId + 
+    "' AND state_id <> 4"
+))
 
 
 if (ArrayCount(arrLearnings) < 3 && learningStateId == 4) {
