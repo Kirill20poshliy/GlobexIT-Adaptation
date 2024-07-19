@@ -21,7 +21,7 @@ let arrLearnings = ArraySelectAll(XQuery("sql: \
 
 if (ArrayCount(arrLearnings) < 3 && learningStateId == 4) {
     try {
-        tools.activate_course_to_person(learningPersonId + '', newCourseId)
+        tools.activate_course_to_person(OptInt(learningPersonId), newCourseId)
     } catch (e) {
         alert('Ошибка при назначении курса: ' + e?.message)
     }
