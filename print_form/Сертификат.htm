@@ -7,7 +7,7 @@
   otElems = typeTopElem.custom_elems
 
   function getMember(id) {
-    memberFullname = ArrayFirstElem(XQuery("sql: \
+    memberFullname = ArrayOptFirstElem(XQuery("sql: \
       SELECT fullname \
       FROM dbo.collaborators \
       WHERE id = " + id)).fullname
