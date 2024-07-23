@@ -46,7 +46,7 @@ type iResponse = {
 
 function Get_colls(): iResponse {
     try {
-        var result = XQuery("sql: \
+        let result = XQuery("sql: \
             SELECT id, code, fullname, email, position_name, position_parent_name \
             FROM dbo.collaborators");
         return {
