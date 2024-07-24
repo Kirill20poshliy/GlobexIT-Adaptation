@@ -1,32 +1,43 @@
 ﻿<%
 /*<script>*/
-  oid = Int(Request.QueryString.GetProperty("object_id"))
-  oTopElem = OpenDoc(UrlFromDocID(oid)).TopElem
+  var oid = OptInt(Request.QueryString.GetProperty("object_id"))
+  if (oid == undefined)
+    throw new Error('Неверный ID документа.')
+  var oDoc = tools.open_doc(oid)
+  if (oDoc == undefined)
+    throw new Error('Документа с данным ID не существует.')
+  var oTopElem = oDoc.TopElem
 
-  typeTopElem = OpenDoc(UrlFromDocID(oTopElem.type_id)).TopElem
-  otElems = typeTopElem.custom_elems
+  var typeDoc = tools.open_doc(oTopElem.type_id)
+  if (typeDoc == undefined)
+    throw new Error('Документа с данным ID не существует.')
+  var typeTopElem = typeDoc.TopElem
+  var otElems = typeTopElem.custom_elems
 
   function getMember(id) {
-    memberFullname = ArrayOptFirstElem(XQuery("sql: \
+    var member = ArrayOptFirstElem(XQuery("sql: \
       SELECT fullname \
       FROM dbo.collaborators \
-      WHERE id = " + id)).fullname
-    arrMember = memberFullname.Value.split(' ')
-    mFirstname = StrToCharArray(arrMember[1])
-    mMiddlename = StrToCharArray(arrMember[2])
+      WHERE id = " + id))
+    if (member == undefined)
+      return ''
+    var memberFullname = member.fullname
+    var arrMember = memberFullname.Value.split(' ')
+    var mFirstname = StrToCharArray(arrMember[1])
+    var mMiddlename = StrToCharArray(arrMember[2])
     return arrMember[0] + ' ' + mFirstname[0] + '.' + mMiddlename[0] + '.'
   }
 
-  comission_fst = ArrayOptFind(otElems, 'This.name=="comission_fst"').value
-  member1 = getMember(comission_fst)
+  var comission_fst = ArrayOptFind(otElems, 'This.name=="comission_fst"').value
+  var member1 = getMember(comission_fst)
 
-  comission_snd = ArrayOptFind(otElems, 'This.name=="comission_snd"').value
-  member2 = getMember(comission_snd)
+  var comission_snd = ArrayOptFind(otElems, 'This.name=="comission_snd"').value
+  var member2 = getMember(comission_snd)
 
-  hours = ArrayOptFind(otElems, 'This.name=="hours"').value
-  programm = ArrayOptFind(otElems, 'This.name=="programm"').value
-  order_date = Date(ArrayOptFind(otElems, 'This.name=="order_date"').value)
-  order_number = ArrayOptFind(otElems, 'This.name=="order_number"').value
+  var hours = ArrayOptFind(otElems, 'This.name=="hours"').value
+  var programm = ArrayOptFind(otElems, 'This.name=="programm"').value
+  var order_date = Date(ArrayOptFind(otElems, 'This.name=="order_date"').value)
+  var order_number = ArrayOptFind(otElems, 'This.name=="order_number"').value
 %>
 
 <html xmlns:v="urn:schemas-microsoft-com:vml"
