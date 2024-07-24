@@ -12,7 +12,7 @@
 function Set_coll(): string {
     try {
         let result = HttpRequest('https://randomuser.me/api/')
-        if (result == undefined) {
+        if (result == undefined || result.RespCode !== 200) {
             throw new Error('Ошибка внешнего сервиса API')
         }
         let data: [] = tools.read_object(result.Body).GetOptProperty('results')
