@@ -1,32 +1,38 @@
 ﻿let IS_DEBUG = tools_web.is_true(Param.IS_DEBUG)
-const MODE = Param.GetOptProperty('MODE')
-let userId = Param.GetOptProperty('userId')
-let groupId = Param.GetOptProperty('groupId')
-let notificationTypeId = Param.GetOptProperty('notificationTypeId')
-let percent = Param.GetOptProperty('percent')
+const MODE = Param.GetOptProperty<string>('MODE')
+let userId = Param.GetOptProperty<string>('userId')
+let groupId = Param.GetOptProperty<string>('groupId')
+let notificationTypeId = Param.GetOptProperty<string>('notificationTypeId')
+let percent = Param.GetOptProperty<string>('percent')
 
 
-function callLib() {
+function checkParams(params: string[]): void {
+    let i: number = 0
+    for (i; i < ArrayCount(params); i++) {
+        if (!params[i]) {
+            throw new Error('checkParams -> Не указаны требуемые параметры для выполнения метода!')
+        }
+    }
+}
+
+
+function callLib(): void {
     try {
+        checkParams([MODE, userId])
         switch (MODE) {
             case 'Сменить пароль':
-                if (!userId || !notificationTypeId) 
-                    throw new Error('Не указаны требуемые параметры для выполнения метода!')
+                checkParams([notificationTypeId])
                 tools.call_code_library_method('lib_collaborator', 'changePassword', [userId, notificationTypeId])
                 break
             case 'Повысить зарплату':
-                if (!userId || !percent) 
-                    throw new Error('Не указаны требуемые параметры для выполнения метода!')
+                checkParams([percent])
                 tools.call_code_library_method('lib_collaborator', 'raiseSalary', [userId, OptInt(percent, 0)])
                 break
             case 'Добавить в группу':
-                if (!userId || !groupId)
-                    throw new Error('Не указаны требуемые параметры для выполнения метода!')
+                checkParams([groupId])
                 tools.call_code_library_method('lib_collaborator', 'addInGroup', [userId, groupId])
                 break
             case 'Уволить':
-                if (!userId) 
-                    throw new Error('Не указаны требуемые параметры для выполнения метода!')
                 tools.call_code_library_method('lib_collaborator', 'dismiss', [userId])
                 break
             default: throw new Error('Указан неверный MODE!')
@@ -37,7 +43,7 @@ function callLib() {
 }
 
 
-function Main() {
+function Main(): void {
     try {
         callLib()
     } catch (e) {
@@ -46,7 +52,7 @@ function Main() {
 }
 
 
-function Log(value1: string, value2?: string) {
+function Log(value1: string, value2?: string): void {
     var text = value2 != undefined ? value1 + ": " + value2 : value1
     if(IS_DEBUG)
         alert(text)
