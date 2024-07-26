@@ -22,7 +22,7 @@ function sendMessage(text: string): boolean {
         if (userBosses !== undefined && IsArray(userBosses)) {
             let boss = ArrayOptFind<unknown>(userBosses, 'This.boss_type_id==' + BOSS_TYPE) 
             let bossId: string = boss.GetOptProperty('person_id')
-            return tools.create_notification(Int("7390428390364825813"), Int(bossId), text, Int(curUserID))
+            return tools.create_notification(OptInt("7390428390364825813"), OptInt(bossId), text, OptInt(curUserID))
         } else {
             return false
         }

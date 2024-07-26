@@ -33,37 +33,40 @@ let collInfo = ArrayOptFirstElem<iCollInfo>(XQuery("sql: \
 ))
 
 
-RESULT = [
-    {
-        id: 1,
-        name: 'Email',
-        value: collInfo.email
-    },
-    {
-        id: 2,
-        name: 'Возраст',
-        value: collInfo.age
-    },
-    {
-        id: 3,
-        name: 'Дата рождения',
-        value: StrDate(Date(collInfo.birth_date), false)
-    },
-    {
-        id: 4,
-        name: 'Должность',
-        value: collInfo.position_name
-    },
-    {
-        id: 5,
-        name: 'Подразделение',
-        value: collInfo.position_parent_name
-    },
-    {
-        id: 6,
-        name: 'Табельный номер',
-        value: collInfo.tab_num
-    }
-];
+if (collInfo !== undefined) {
+    RESULT = [
+        {
+            id: 1,
+            name: 'Email',
+            value: collInfo.email
+        },
+        {
+            id: 2,
+            name: 'Возраст',
+            value: collInfo.age
+        },
+        {
+            id: 3,
+            name: 'Дата рождения',
+            value: StrDate(Date(collInfo.birth_date), false)
+        },
+        {
+            id: 4,
+            name: 'Должность',
+            value: collInfo.position_name
+        },
+        {
+            id: 5,
+            name: 'Подразделение',
+            value: collInfo.position_parent_name
+        },
+        {
+            id: 6,
+            name: 'Табельный номер',
+            value: collInfo.tab_num
+        }
+    ];
+}
+
 
 export {}
