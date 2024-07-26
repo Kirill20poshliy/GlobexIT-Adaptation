@@ -1,4 +1,23 @@
-﻿function changePassword(userId: number, notificationTypeId: number) {
+﻿/**
+ * @namespace Websoft.WT.Collaborator
+ */
+/**
+ * @typedef {number} bigint
+ */
+/**
+ * @typedef {number} real
+*/
+
+
+/**
+ * @function changePassword
+ * @memberof Websoft.WT.Collaborator
+ * @description Меняет пароль указанного сотрудника на случайный. Отправляет уведомление сотруднику.
+ * @param {bigint} userId - ID cотрудника
+ * @param {bigint} notificationTypeId - ID типа уведомления
+ */
+
+function changePassword(userId: number, notificationTypeId: number) {
     try {
         let oDoc = tools.open_doc(userId)
         if (oDoc == undefined) {
@@ -15,6 +34,14 @@
     }
 }
 
+
+/**
+ * @function raiseSalary
+ * @memberof Websoft.WT.Collaborator
+ * @description Поднимает зарплату указанному сотруднику на указанный процент.
+ * @param {bigint} userId - ID cотрудника
+ * @param {real} percent - Процент повышения зарплаты
+ */
 
 function raiseSalary(userId: number, percent: number) {
     try {
@@ -33,6 +60,14 @@ function raiseSalary(userId: number, percent: number) {
 }
 
 
+/**
+ * @function addInGroup
+ * @memberof Websoft.WT.Collaborator
+ * @description Добавляет сотрудника в указанную группу
+ * @param {bigint} userId - ID cотрудника
+ * @param {bigint} groupId - ID группы
+ */
+
 function addInGroup(userId: number, groupId: number) {
     try {
         if (!userId) {
@@ -50,6 +85,13 @@ function addInGroup(userId: number, groupId: number) {
     }
 }
 
+
+/**
+ * @function dismiss
+ * @memberof Websoft.WT.Collaborator
+ * @description "Увольняет" указанного сотрудника
+ * @param {bigint} userId - ID cотрудника
+ */
 
 function dismiss(userId: number) {
     try {
